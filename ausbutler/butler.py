@@ -1,17 +1,10 @@
-import json
-from os import path
-import __main__
-
-config = json.load(
-    open(path.join(path.dirname(__main__.__file__), 'config', 'butler.json')))
-
-def cutoff(score):
+def cutoff(score, cutoff_point=32, cutoff_rate=0.1):
     sign = 1 if score > 0 else -1
     score = abs(score)
-    if score > config['cutoff_point']:
-        score -= config['cutoff_point']
-        score *= config['cutoff_rate']
-        score += config['cutoff_point']
+    if score > cutoff_point:
+        score -= cutoff_point
+        score *= cutoff_rate
+        score += cutoff_point
     return score * sign
 
 def get_opponents(butler, player):
@@ -32,10 +25,10 @@ def get_room(butler, player):
     if player in [table.closeE, table.closeW, table.closeN, table.closeS]:
         return 'closed'
 
-def normalize(butler):
+def normalize(butler, opp_factor=0.5):
     if butler.board_count == 0:
         return 0.0
     return (
         butler.cut_score / butler.board_count
-        + butler.opp_score * config['opponent_factor']
+        + butler.opp_score * opp_factor
     ) * butler.board_count

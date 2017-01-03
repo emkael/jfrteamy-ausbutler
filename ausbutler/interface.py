@@ -6,8 +6,9 @@ import re
 
 class Interface:
 
-    def __init__(self):
+    def __init__(self, config):
         self.session = Session()
+        self.config = config
 
     def init_db(self, force=False):
         from .model import Base
@@ -28,7 +29,10 @@ class Interface:
                         aus_b.match = int(column_match.group(1), base=10)
                         aus_b.segment = int(column_match.group(2))
                         aus_b.score = float(value)
-                        aus_b.cut_score = cutoff(aus_b.score)
+                        aus_b.cut_score = cutoff(
+                            aus_b.score,
+                            self.config['cutoff_point'],
+                            self.config['cutoff_rate'])
                         aus_b.board_count = aus_b.table.butler_count[
                             get_room(aus_b, butler.id)]
                         self.session.add(aus_b)
@@ -52,5 +56,6 @@ class Interface:
 
     def normalize_scores(self):
         for butler in self.session.query(AusButler).all():
-            butler.corrected_score = normalize(butler)
+            butler.corrected_score = normalize(
+                butler, self.config['opponent_factor'])
         self.session.commit()
