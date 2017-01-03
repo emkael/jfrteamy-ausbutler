@@ -1,14 +1,14 @@
 import re
 
 from .butler import cutoff, get_opponents, get_room, normalize
-from .db import Session
+from .db import get_session
 from .model import AusButler, Butler
 
 
-class Interface:
+class Interface(object):
 
     def __init__(self, config):
-        self.session = Session()
+        self.session = get_session()
         self.config = config
 
     def init_db(self, force=False):
@@ -46,7 +46,9 @@ class Interface:
             averages = {opps[0]: {'sum': 0.0, 'count': 0},
                         opps[1]: {'sum': 0.0, 'count': 0}}
             for opp_butler in butlers:
-                if opp_butler.id in opps and (opp_butler.match < butler.match or (opp_butler.match == butler.match and opp_butler.segment < butler.segment)):
+                if opp_butler.id in opps \
+                   and (opp_butler.match < butler.match or \
+                        (opp_butler.match == butler.match and opp_butler.segment < butler.segment)):
                     averages[opp_butler.id]['sum'] += opp_butler.score
                     averages[opp_butler.id]['count'] += opp_butler.board_count
             butler.opp_score = sum(

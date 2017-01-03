@@ -1,12 +1,12 @@
 from cached_property import cached_property
-from sqlalchemy import Column, ForeignKey, MetaData, Table, func
+from sqlalchemy import Column, MetaData, Table, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.types import Float, Integer
 
-from .db import Session
+from .db import get_session
 
 Base = declarative_base()
-session = Session()
+session = get_session()
 
 class AusButler(Base):
     __tablename__ = 'aus_butler'
