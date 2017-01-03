@@ -1,6 +1,6 @@
 from .db import Session
 from .model import AusButler, Butler
-from .butler import cutoff, get_room
+from .butler import cutoff, get_opponents, get_room
 import re
 
 
@@ -32,5 +32,21 @@ class Interface:
                         aus_b.board_count = aus_b.table.butler_count[
                             get_room(aus_b, butler.id)]
                         self.session.add(aus_b)
+        self.session.commit()
+
+    def opp_scores(self):
+        butlers = self.session.query(AusButler).all()
+        for butler in butlers:
+            opps = get_opponents(butler, butler.id)
+            averages = {opps[0]: {'sum': 0.0, 'count': 0},
+                        opps[1]: {'sum': 0.0, 'count': 0}}
+            for opp_butler in butlers:
+                if opp_butler.id in opps and (opp_butler.match < butler.match or (opp_butler.match == butler.match and opp_butler.segment < butler.segment)):
+                    averages[opp_butler.id]['sum'] += opp_butler.score
+                    averages[opp_butler.id]['count'] += opp_butler.board_count
+            butler.opp_score = sum(
+                [opp['sum'] / opp['count'] if opp['count'] > 0 else 0.0
+                 for opp in averages.values()]
+            ) / 2
         self.session.commit()
 

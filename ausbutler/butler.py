@@ -14,6 +14,17 @@ def cutoff(score):
         score += config['cutoff_point']
     return score * sign
 
+def get_opponents(butler, player):
+    table = butler.table
+    if player in [table.openE, table.openW]:
+        return [table.openN, table.openS]
+    if player in [table.openN, table.openS]:
+        return [table.openE, table.openW]
+    if player in [table.closeE, table.closeW]:
+        return [table.closeN, table.closeS]
+    if player in [table.closeN, table.closeS]:
+        return [table.closeE, table.closeW]
+
 def get_room(butler, player):
     table = butler.table
     if player in [table.openE, table.openW, table.openN, table.openS]:
