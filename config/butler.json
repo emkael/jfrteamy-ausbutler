@@ -1,0 +1,5 @@
+{
+    "cutoff_point": 32,
+    "cutoff_rate": 0.1,
+    "opponent_factor": 0.5
+}
