@@ -1,6 +1,6 @@
 from .db import Session
 from .model import AusButler, Butler
-from .butler import cutoff, get_opponents, get_room
+from .butler import cutoff, get_opponents, get_room, normalize
 import re
 
 
@@ -50,3 +50,7 @@ class Interface:
             ) / 2
         self.session.commit()
 
+    def normalize_scores(self):
+        for butler in self.session.query(AusButler).all():
+            butler.corrected_score = normalize(butler)
+        self.session.commit()

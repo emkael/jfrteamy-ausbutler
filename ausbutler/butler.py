@@ -32,3 +32,10 @@ def get_room(butler, player):
     if player in [table.closeE, table.closeW, table.closeN, table.closeS]:
         return 'closed'
 
+def normalize(butler):
+    if butler.board_count == 0:
+        return 0.0
+    return (
+        butler.cut_score / butler.board_count
+        + butler.opp_score * config['opponent_factor']
+    ) * butler.board_count
