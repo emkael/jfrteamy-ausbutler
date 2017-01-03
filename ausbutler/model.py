@@ -1,4 +1,5 @@
-from sqlalchemy import Column, ForeignKey, MetaData, Table
+from cached_property import cached_property
+from sqlalchemy import Column, ForeignKey, MetaData, Table, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.types import Float, Integer
 from .db import Session
@@ -16,6 +17,17 @@ class AusButler(Base):
     opp_score = Column(Float)
     corrected_score = Column(Float)
     board_count = Column(Integer)
+
+    @cached_property
+    def table(self):
+        for table in session.query(Segment).filter(
+                (Segment.rnd == self.match) & (Segment.segment == self.segment)
+        ).all():
+            if self.id in [
+                    table.openN, table.openS, table.openW, table.openE,
+                    table.closeN, table.closeS, table.closeW, table.closeE]:
+                return table
+        return None
 
     def __repr__(self):
         return '[%d] %d-%d: %.2f-%.2f=%.2f' % (self.id,
@@ -45,3 +57,17 @@ class Segment(Base):
                       Column('tabl', Integer, primary_key=True),
                       autoload=True)
 
+    count_cache = {
+        (b.rnd, b.segment, b.tabl) : {
+            'open': int(b.open), 'closed': int(b.closed)
+        } for b in
+        session.query(
+            Score.rnd, Score.segment, Score.tabl,
+            func.sum(Score.butler * (Score.room == 1)).label('open'),
+            func.sum(Score.butler * (Score.room == 2)).label('closed')
+        ).group_by(Score.rnd, Score.segment, Score.tabl).all()
+    }
+
+    @cached_property
+    def butler_count(self):
+        return Segment.count_cache[(self.rnd, self.segment, self.tabl)]
