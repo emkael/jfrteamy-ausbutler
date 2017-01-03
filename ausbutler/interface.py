@@ -1,7 +1,8 @@
+import re
+
+from .butler import cutoff, get_opponents, get_room, normalize
 from .db import Session
 from .model import AusButler, Butler
-from .butler import cutoff, get_opponents, get_room, normalize
-import re
 
 
 class Interface:

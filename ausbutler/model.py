@@ -2,6 +2,7 @@ from cached_property import cached_property
 from sqlalchemy import Column, ForeignKey, MetaData, Table, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.types import Float, Integer
+
 from .db import Session
 
 Base = declarative_base()

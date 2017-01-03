@@ -1,8 +1,7 @@
 import json
-import __main__
-
 from os import path
 
+import __main__
 from ausbutler.interface import Interface
 
 config = json.load(
