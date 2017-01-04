@@ -48,8 +48,8 @@ class Interface(object):
             for opp_butler in butlers:
                 if opp_butler.id in opps \
                    and (opp_butler.match < butler.match or \
-                        (opp_butler.match == butler.match and opp_butler.segment < butler.segment)):
-                    averages[opp_butler.id]['sum'] += opp_butler.score
+                        (opp_butler.match == butler.match and opp_butler.segment <= butler.segment)):
+                    averages[opp_butler.id]['sum'] += opp_butler.cut_score
                     averages[opp_butler.id]['count'] += opp_butler.board_count
             butler.opp_score = sum(
                 [opp['sum'] / opp['count'] if opp['count'] > 0 else 0.0
