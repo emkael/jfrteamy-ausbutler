@@ -1,8 +1,10 @@
 import re
+from jinja2 import Environment, FileSystemLoader
 
 from .butler import cutoff, get_opponents, get_room, normalize
 from .db import get_session
 from .model import AusButler, Butler
+from .tour_config import Translations
 
 
 class Interface(object):
@@ -10,6 +12,10 @@ class Interface(object):
     def __init__(self, config):
         self.session = get_session()
         self.config = config
+        self.translation = Translations()
+        self.template = Environment(loader=FileSystemLoader('template'))
+        self.template.filters['translate'] = self.translation.get_translation
+
 
     def calculate_all(self):
         self.init_db()
