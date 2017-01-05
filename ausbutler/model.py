@@ -1,6 +1,7 @@
 from cached_property import cached_property
-from sqlalchemy import Column, MetaData, Table, func, join, literal
+from sqlalchemy import Column, MetaData, Table, ForeignKey, func, join, literal
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 from sqlalchemy.types import Float, Integer, String
 
 from .db import get_session
@@ -8,9 +9,26 @@ from .db import get_session
 Base = declarative_base()
 session = get_session()
 
+class Team(Base):
+    __table__ = Table('teams', MetaData(bind=session.bind),
+                      autoload=True)
+
+    def __repr__(self):
+        return self.shortname.encode('utf8')
+
+class Player(Base):
+    __table__ = Table('players', MetaData(bind=session.bind),
+                      Column('id', Integer, primary_key=True),
+                      Column('team', Integer, ForeignKey(Team.id)),
+                      autoload=True)
+    team_ = relationship(Team, uselist=False)
+
+    def __repr__(self):
+        return ('%s %s' % (self.gname, self.sname)).encode('utf8')
+
 class AusButler(Base):
     __tablename__ = 'aus_butler'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, ForeignKey(Player.id), primary_key=True)
     match = Column(Integer, primary_key=True)
     segment = Column(Integer, primary_key=True)
     score = Column(Float)
@@ -18,6 +36,7 @@ class AusButler(Base):
     opp_score = Column(Float)
     corrected_score = Column(Float)
     board_count = Column(Integer)
+    player = relationship('Player', uselist=False)
 
     @cached_property
     def table(self):
