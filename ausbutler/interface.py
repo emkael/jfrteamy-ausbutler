@@ -1,8 +1,9 @@
 import re
+from datetime import datetime
 from os import path
 from jinja2 import Environment, FileSystemLoader
 
-from .butler import cutoff, get_opponents, get_room, normalize
+from .butler import cutoff, get_opponents, get_room, normalize, get_line
 from .db import get_session
 from .model import AusButler, Butler
 from .tour_config import Translations, Constants
@@ -92,5 +93,46 @@ class Interface(object):
                         'segment_no': segment_no,
                         'first_board': first_board
                     })
+                )
+
+    def generate_segments(self):
+        template = self.template.get_template('segment.html')
+        for round_no in range(1, Constants.rnd + 1):
+            for segment_no in range(1, Constants.segmentsperround + 1):
+                first_board = 1 + (segment_no - 1) * Constants.boardspersegment
+                filename = '%snormbutler%d-%d.html' % (
+                    Constants.shortname,
+                    round_no, segment_no
+                )
+                results = {}
+                for butler in self.session.query(AusButler).filter(AusButler.match == round_no, AusButler.segment == segment_no):
+                    line = 'TABLE_%s' % (get_line(butler, butler.id))
+                    position = '%d%s' % (butler.table.tabl, self.translation.get_translation(line))
+                    if position not in results:
+                        results[position] = {'players': []}
+                    results[position]['players'].append(str(butler.player).decode('utf8'))
+                    results[position]['position'] = position
+                    results[position]['team'] = str(butler.player.team_).decode('utf8')
+                    results[position]['score'] = butler.score
+                    results[position]['opp_score'] = butler.opp_score
+                    results[position]['norm_score'] = butler.corrected_score
+                results = sorted(results.values(), key=lambda r: r['norm_score'], reverse=True)
+                place = 1
+                previous = None
+                for r in range(0, len(results)):
+                    results[r]['place'] = place if results[r]['norm_score'] != previous else ''
+                    previous = results[r]['norm_score']
+                    place += 1
+                file(path.join(Constants.path, filename), 'w').write(
+                    template.render({
+                        'prefix': Constants.shortname,
+                        'logoh': Constants.logoh,
+                        'round_no': round_no,
+                        'segment_no': segment_no,
+                        'results': results,
+                        'boards': range(first_board, first_board + Constants.boardspersegment),
+                        'date': datetime.now().strftime('%Y-%m-%d'),
+                        'time': datetime.now().strftime('%H:%M')
+                    }).encode('utf8')
                 )
 

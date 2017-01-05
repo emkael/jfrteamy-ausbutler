@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta name="robots" content="noarchive">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="Generator" content="jfrteamy-aus-butler">
+    <title>{{"PAGE_TITLE"|translate}}</title>
+    <link rel="stylesheet" type="text/css" href="css/kolorki.css">
+    <script type="text/javascript" src="sklady/myAjax.js"></script>
+  </head>
+  <body class="all">
+    <script type="text/javascript" src="sklady/wz_tooltip.js"></script>
+    <table cellspacing="0">
+      <tr>
+        <td colspan="3">
+          {{logoh}}
+        </td>
+      </tr>
+      <tr>
+        <td class="e" colspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bdnt12" colspan="3">{{"BUTLER_ROUND"|translate}}{{round_no}} {{"SEGMENT"|translate}}{{segment_no}}</td>
+      </tr>
+      <tr>
+        <td class="e" colspan="3">&nbsp;</td>
+      </tr>
+      <tr valign="top">
+        <td>
+          <table cellspacing="0">
+            <tr>
+              <td class="bdcc12">{{"HEADER_PLACE"|translate}}</td>
+              <td class="bdcc2">{{"HEADER_TABLE"|translate}}</td>
+              <td class="bdcc2">&nbsp;</td>
+              <td class="bdcc2">{{"HEADER_TEAM"|translate}}</td>
+              <td class="bdcc2">&nbsp;&nbsp;&nbsp;{{"HEADER_IMPS"|translate}}&nbsp;&nbsp;&nbsp;</td>
+              <td class="bdcc2">&nbsp;&nbsp;&nbsp;{{"HEADER_OPPS"|translate}}&nbsp;&nbsp;&nbsp;</td>
+              <td class="bdcc2">&nbsp;{{"HEADER_NORMALIZED"|translate}}&nbsp;</td>
+            </tr>
+            {% for result in results %}
+            <tr>
+              <td class="bdc1">{{result['place']}}</td>
+              <td class="bdc">{{result['position']}}</td>
+              <td class="zno">{{'-'.join(result['players'])}}</td>
+              <td class="zno">{{result['team']}}</td>
+              <td class="bdc">{{ '%0+d' % result['score']}}</td>
+              <td class="bdc">{{ '%+.2f' % result['opp_score']}}</td>
+              <td class="bdc">{{ '%+.2f' % result['norm_score']}}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>
+          <table cellspacing="0">
+            <tr>
+              <td class="bdcc12">{{"HEADER_BOARD_NO"|translate}}</td>
+            </tr>
+            {% for board_no in boards %}
+            <tr>
+              <td class="bdcc1">
+                <a href="{{prefix}}{{round_no}}b-{{board_no}}.html" class="zb" target="popra">&nbsp;&nbsp;&nbsp;{{board_no}}&nbsp;&nbsp;</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        </td>
+      </tr>
+    </table>
+    <p class="vs"></p>
+    <p class="f">
+      {{"FOOTER_ANALYSIS"|translate}}, &copy;William Bailey&#39;1999<br />
+      &nbsp;Admin&nbsp;&copy;Jan Romański&#39;2005,&nbsp;jfrteamy-ausbutler&nbsp;&copy;Michał Klichowicz&#39;2017{{"FOOTER_GENERATED"|translate}}
+      {{date}}{{"FOOTER_AT"|translate}}{{time}}{{"FOOTER_OPTIMIZED"|translate}}
+    </p>
+  </body>
+</html>

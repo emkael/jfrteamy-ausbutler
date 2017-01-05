@@ -25,6 +25,12 @@ def get_room(butler, player):
     if player in [table.closeE, table.closeW, table.closeN, table.closeS]:
         return 'closed'
 
+def get_line(butler, player):
+    table = butler.table
+    room = get_room(butler, player).upper()
+    direction = 'NS' if player in [table.openN, table.openS, table.closeN, table.closeS] else 'EW'
+    return '%s_%s' % (room, direction)
+
 def normalize(butler, opp_factor=0.5):
     if butler.board_count == 0:
         return 0.0
