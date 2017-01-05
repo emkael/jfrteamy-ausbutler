@@ -4,3 +4,4 @@ from ausbutler.interface import Interface
 
 i = Interface(load_config('butler'))
 i.calculate_all()
+i.generate_all()

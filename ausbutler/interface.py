@@ -78,6 +78,11 @@ class Interface(object):
                 butler, self.config['opponent_factor'])
         self.session.commit()
 
+    def generate_all(self):
+        self.generate_segments()
+        self.generate_frames()
+        self.generate_table()
+
     def generate_frames(self):
         template = self.template.get_template('frame.html')
         for round_no in range(1, Constants.rnd + 1):
