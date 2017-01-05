@@ -1,10 +1,11 @@
 import re
+from os import path
 from jinja2 import Environment, FileSystemLoader
 
 from .butler import cutoff, get_opponents, get_room, normalize
 from .db import get_session
 from .model import AusButler, Butler
-from .tour_config import Translations
+from .tour_config import Translations, Constants
 
 
 class Interface(object):
@@ -74,3 +75,22 @@ class Interface(object):
             butler.corrected_score = normalize(
                 butler, self.config['opponent_factor'])
         self.session.commit()
+
+    def generate_frames(self):
+        template = self.template.get_template('frame.html')
+        for round_no in range(1, Constants.rnd + 1):
+            for segment_no in range(1, Constants.segmentsperround + 1):
+                first_board = 1 + (segment_no - 1) * Constants.boardspersegment
+                filename = '%snormbutler%d-%d.htm' % (
+                    Constants.shortname,
+                    round_no, segment_no
+                )
+                file(path.join(Constants.path, filename), 'w').write(
+                    template.render({
+                        'prefix': Constants.shortname,
+                        'round_no': round_no,
+                        'segment_no': segment_no,
+                        'first_board': first_board
+                    })
+                )
+
