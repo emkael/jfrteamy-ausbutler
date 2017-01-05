@@ -1,5 +1,5 @@
 from cached_property import cached_property
-from sqlalchemy import Column, MetaData, Table, func
+from sqlalchemy import Column, MetaData, Table, func, join, literal
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.types import Float, Integer, String
 
@@ -82,3 +82,11 @@ class Admin(Base):
     __table__ = Table('admin', MetaData(bind=session.bind),
                       Column('shortname', String, primary_key=True),
                       autoload=True)
+
+class Params(Base):
+    __table__ = Table('params', MetaData(bind=session.bind),
+                      Column('datasource', Integer, primary_key=True),
+                      autoload=True)
+
+class Parameters(Base):
+    __table__ = join(Admin, Params, literal(True))

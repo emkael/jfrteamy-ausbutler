@@ -1,6 +1,6 @@
 from .config import load_config
 from .db import get_session
-from .model import Translation, Admin
+from .model import Translation, Parameters
 
 session = get_session()
 
@@ -23,4 +23,4 @@ class Translations(object):
     def detect_language():
         return 'en' if Translations.get_translation('ROUND').lower().strip() == 'round' else 'pl'
 
-Constants = session.query(Admin).one()
+Constants = session.query(Parameters).one()
