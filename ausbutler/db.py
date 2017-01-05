@@ -5,7 +5,7 @@ from .config import load_config
 
 def get_session():
     session = sessionmaker(bind=create_engine(
-        "mysql://{0[user]}:{0[pass]}@{0[host]}/{0[db]}".format(
+        "mysql://{0[user]}:{0[pass]}@{0[host]}/{0[db]}?charset=utf8".format(
             load_config('db')
         )))
     return session()
