@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 from os import path
+from copy import copy
 from jinja2 import Environment, FileSystemLoader
 
 from .butler import cutoff, get_opponents, get_room, normalize, get_line
@@ -136,3 +137,59 @@ class Interface(object):
                     }).encode('utf8')
                 )
 
+    def generate_table(self):
+        template = self.template.get_template('table.html')
+        filename = '%snormbutler.html' % (Constants.shortname)
+        segments = []
+        result_template = []
+        for rnd in range(1, Constants.rnd + 1):
+            for segment in range(1, Constants.segmentsperround + 1):
+                segments.append({'round': rnd, 'segment': segment})
+                result_template.append('')
+        players = {}
+        for butler in self.session.query(AusButler).all():
+            if butler.id not in players:
+                players[butler.id] = {
+                    'name': str(butler.player).decode('utf8'),
+                    'team': str(butler.player.team_).decode('utf8'),
+                    'sum': 0,
+                    'count': 0,
+                    'results': copy(result_template)
+                }
+            players[butler.id]['sum'] += butler.corrected_score
+            players[butler.id]['count'] += butler.board_count
+            players[butler.id]['results'][(butler.match - 1) * Constants.segmentsperround + butler.segment - 1] = butler.corrected_score
+        for player in players.values():
+            if player['count'] > 0:
+                player['sum'] /= player['count']
+        players = sorted(players.values(), key=lambda p: p['sum'], reverse=True)
+        board_threshold = Constants.boardspersegment * Constants.segmentsperround * \
+                          (Constants.rnd + (Constants.roundcnt * (Constants.minbutler / 100.0 - 1)))
+        above_threshold = []
+        below_threshold = []
+        for player in players:
+            if player['count'] >= board_threshold:
+                above_threshold.append(player)
+            else:
+                below_threshold.append(player)
+        for p_list in [above_threshold, below_threshold]:
+            place = 1
+            prev = None
+            for player in p_list:
+                if player['sum'] != prev:
+                    player['place'] = place
+                prev = player['sum']
+                place += 1
+        file(path.join(Constants.path, filename), 'w').write(
+            template.render({
+                'prefix': Constants.shortname,
+                'logoh': Constants.logoh,
+                'percent_threshold': Constants.minbutler,
+                'segments': segments,
+                'segment_limit': self.config['segments_in_table_limit'],
+                'above_threshold': above_threshold,
+                'below_threshold': below_threshold,
+                'date': datetime.now().strftime('%Y-%m-%d'),
+                'time': datetime.now().strftime('%H:%M')
+            }).encode('utf8')
+        )

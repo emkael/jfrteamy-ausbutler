@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta name="robots" content="noarchive">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="Generator" content="jfrteamy-aus-butler">
+    <title>{{"PAGE_TITLE"|translate}}: {{"BUTLER"|translate}}</title>
+    <link rel="stylesheet" type="text/css" href="css/kolorki.css">
+    <script type="text/javascript" src="sklady/myAjax.js"></script>
+  </head>
+  <body class="all">
+    <script type="text/javascript" src="sklady/wz_tooltip.js"></script>
+    <table cellspacing="0">
+      <tr>
+        <td colspan="{{segment_limit+5}}">
+          {{logoh}}
+        </td>
+      </tr>
+      <tr>
+        <td class="e" colspan="{{segment_limit+5}}">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bdnt12" colspan="{{segment_limit+5}}">
+          {{"NORMALIZED_CLASSIFICATION"|translate}}
+          {% if percent_threshold > 0 %}
+          <small><br />{{"PLAYERS_WITHOUT_CHANCES"|translate}}{{percent_threshold}}{{"PERCENT_NOT_LISTED"|translate}}</small>
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td class="e" colspan="{{segment_limit+5}}">&nbsp;</td>
+      </tr>
+      {% if segments|length > segment_limit %}
+      <tr>
+        <td class="bdnl12" colspan="{{segment_limit+5}}">
+          {{"HEADER_PREV_ROUNDS"|translate}}
+          {% for segment in segments[0:-segment_limit] %}
+          |<a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+            {{segment['round']}}-{{segment['segment']}}
+          </a>
+          {% endfor %}
+          |
+        </td>
+      </tr>
+      <tr>
+        <td class="e" colspan="{{segment_limit+5}}">&nbsp;</td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td class="bdcc12">{{"HEADER_PLACE"|translate}}</td>
+        <td class="bdcc2">&nbsp;</td>
+        <td class="bdcc2">{{"HEADER_TEAM"|translate}}</td>
+        <td class="bdcc2">{{"HEADER_IMPBRD"|translate}}</td>
+        <td class="bdcc2">{{"HEADER_BOARDS"|translate}}</td>
+        {% for segment in segments[-segment_limit:] %}
+        <td class="bdcc2">
+          <a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+            {{segment['round']}}-{{segment['segment']}}
+          </a>
+        </td>
+        {% endfor %}
+      </tr>
+      {% for player in above_threshold %}
+      <tr>
+        <td class="bdc1">{{player['place']}}</td>
+        <td class="bd">{{player['name']}}</td>
+        <td class="bd">{{player['team']}}</td>
+        <td class="bdc">{{'%.2f' % player['sum']}}</td>
+        <td class="bdc">{{player['count']}}</td>
+        {% for result in player['results'][-segment_limit:] %}
+        {% if result != '' %}
+        <td class="bdc">{{'%+.2f' % result}}</td>
+        {% else %}
+        <td class="bdc">&nbsp;</td>
+        {% endif %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      {% if below_threshold|length > 0 %}
+      <tr>
+        <td class="e" colspan="{{segment_limit+5}}">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bdnt12" colspan="{{segment_limit+5}}">
+          {{"NORMALIZED_CLASSIFICATION"|translate}}
+          {% if percent_threshold > 0 %}
+          <small><br />{{"PLAYERS_WITHOUT_CHANCES"|translate}}{{percent_threshold}}%</small>
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td class="e" colspan="{{segment_limit+5}}">&nbsp;</td>
+      </tr>
+      {% if segments|length > segment_limit %}
+      <tr>
+        <td class="bdnl12" colspan="{{segment_limit+5}}">
+          {{"HEADER_PREV_ROUNDS"|translate}}
+          {% for segment in segments[0:-segment_limit] %}
+          |<a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+            {{segment['round']}}-{{segment['segment']}}
+          </a>
+          {% endfor %}
+          |
+        </td>
+      </tr>
+      <tr>
+        <td class="e" colspan="{{segment_limit+5}}">&nbsp;</td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td class="bdcc12">{{"HEADER_PLACE"|translate}}</td>
+        <td class="bdcc2">&nbsp;</td>
+        <td class="bdcc2">{{"HEADER_TEAM"|translate}}</td>
+        <td class="bdcc2">{{"HEADER_IMPBRD"|translate}}</td>
+        <td class="bdcc2">{{"HEADER_BOARDS"|translate}}</td>
+        {% for segment in segments[-segment_limit:] %}
+        <td class="bdcc2">
+          <a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+            {{segment['round']}}-{{segment['segment']}}
+          </a>
+        </td>
+        {% endfor %}
+      </tr>
+      {% for player in below_threshold %}
+      <tr>
+        <td class="bdc1">{{player['place']}}</td>
+        <td class="bd">{{player['name']}}</td>
+        <td class="bd">{{player['team']}}</td>
+        <td class="bdc">{{'%.2f' % player['sum']}}</td>
+        <td class="bdc">{{player['count']}}</td>
+        {% for result in player['results'][-segment_limit:] %}
+        {% if result != '' %}
+        <td class="bdc">{{'%+.2f' % result}}</td>
+        {% else %}
+        <td class="bdc">&nbsp;</td>
+        {% endif %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      {% endif %}
+    </table>
+    <p class="vs"></p>
+    <p class="f">
+      {{"FOOTER_ANALYSIS"|translate}}, &copy;William Bailey&#39;1999<br />
+      &nbsp;Admin&nbsp;&copy;Jan Romański&#39;2005,&nbsp;jfrteamy-ausbutler&nbsp;&copy;Michał Klichowicz&#39;2017{{"FOOTER_GENERATED"|translate}}
+      {{date}}{{"FOOTER_AT"|translate}}{{time}}{{"FOOTER_OPTIMIZED"|translate}}
+    </p>
+  </body>
+</html>
