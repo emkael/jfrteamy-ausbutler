@@ -1,7 +1,7 @@
 from cached_property import cached_property
 from sqlalchemy import Column, MetaData, Table, func
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.types import Float, Integer
+from sqlalchemy.types import Float, Integer, String
 
 from .db import get_session
 
@@ -72,3 +72,13 @@ class Segment(Base):
     @cached_property
     def butler_count(self):
         return Segment.count_cache[(self.rnd, self.segment, self.tabl)]
+
+class Translation(Base):
+    __table__ = Table('logoh', MetaData(bind=session.bind),
+                      Column('id', Integer, primary_key=True),
+                      autoload=True)
+
+class Admin(Base):
+    __table__ = Table('admin', MetaData(bind=session.bind),
+                      Column('shortname', String, primary_key=True),
+                      autoload=True)
