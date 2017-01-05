@@ -7,7 +7,4 @@ from ausbutler.interface import Interface
 
 i = Interface(json.load(
     open(path.join(path.dirname(__main__.__file__), 'config', 'butler.json'))))
-i.init_db()
-i.populate_db()
-i.opp_scores()
-i.normalize_scores()
+i.calculate_all()

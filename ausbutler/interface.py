@@ -11,6 +11,12 @@ class Interface(object):
         self.session = get_session()
         self.config = config
 
+    def calculate_all(self):
+        self.init_db()
+        self.populate_db()
+        self.opp_scores()
+        self.normalize_scores()
+
     def init_db(self, force=False):
         from .model import Base
         if force:
