@@ -28,7 +28,7 @@ class Player(Base):
 
 class AusButler(Base):
     __tablename__ = 'aus_butler'
-    id = Column(Integer, ForeignKey(Player.id), primary_key=True)
+    id = Column(Integer, primary_key=True)
     match = Column(Integer, primary_key=True)
     segment = Column(Integer, primary_key=True)
     score = Column(Float)
@@ -36,7 +36,7 @@ class AusButler(Base):
     opp_score = Column(Float)
     corrected_score = Column(Float)
     board_count = Column(Integer)
-    player = relationship('Player', uselist=False)
+    player = relationship('Player', uselist=False, foreign_keys=[id], primaryjoin='AusButler.id == Player.id')
 
     @cached_property
     def table(self):
