@@ -101,7 +101,7 @@ class Interface(object):
                         'round_no': round_no,
                         'segment_no': segment_no,
                         'first_board': first_board
-                    })
+                    }).encode('utf8')
                 )
                 files.append(filename)
         return files
