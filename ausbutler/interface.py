@@ -79,11 +79,14 @@ class Interface(object):
         self.session.commit()
 
     def generate_all(self):
-        self.generate_segments()
-        self.generate_frames()
-        self.generate_table()
+        files = []
+        files += self.generate_segments()
+        files += self.generate_frames()
+        files += self.generate_table()
+        return list(set(files))
 
     def generate_frames(self):
+        files = []
         template = self.template.get_template('frame.html')
         for round_no in range(1, Constants.rnd + 1):
             for segment_no in range(1, Constants.segmentsperround + 1):
@@ -100,8 +103,11 @@ class Interface(object):
                         'first_board': first_board
                     })
                 )
+                files.append(filename)
+        return files
 
     def generate_segments(self):
+        files = []
         template = self.template.get_template('segment.html')
         for round_no in range(1, Constants.rnd + 1):
             for segment_no in range(1, Constants.segmentsperround + 1):
@@ -141,6 +147,8 @@ class Interface(object):
                         'time': datetime.now().strftime('%H:%M')
                     }).encode('utf8')
                 )
+                files.append(filename)
+        return files
 
     def generate_table(self):
         template = self.template.get_template('table.html')
@@ -198,3 +206,4 @@ class Interface(object):
                 'time': datetime.now().strftime('%H:%M')
             }).encode('utf8')
         )
+        return [filename]
