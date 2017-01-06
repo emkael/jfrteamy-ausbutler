@@ -1,5 +1,5 @@
 from cached_property import cached_property
-from sqlalchemy import Column, MetaData, Table, ForeignKey, func, join, literal
+from sqlalchemy import Column, ForeignKey, MetaData, Table, func, join, literal
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Float, Integer, String

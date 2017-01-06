@@ -1,6 +1,8 @@
-from os import path
 import json
+from os import path
+
 import __main__
+
 
 def load_config(filename):
     return json.load(

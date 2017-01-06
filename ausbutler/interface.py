@@ -1,13 +1,14 @@
 import re
+from copy import copy
 from datetime import datetime
 from os import path
-from copy import copy
+
 from jinja2 import Environment, FileSystemLoader
 
-from .butler import cutoff, get_opponents, get_room, normalize, get_line
+from .butler import cutoff, get_line, get_opponents, get_room, normalize
 from .db import get_session
 from .model import AusButler, Butler
-from .tour_config import Translations, Constants
+from .tour_config import Constants, Translations
 
 
 class Interface(object):

@@ -1,6 +1,6 @@
 from .config import load_config
 from .db import get_session
-from .model import Translation, Parameters
+from .model import Parameters, Translation
 
 session = get_session()
 

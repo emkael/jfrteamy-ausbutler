@@ -1,9 +1,8 @@
 import sys
 
 from ausbutler.config import load_config
-from ausbutler.interface import Interface
 from ausbutler.goniec import Goniec
-
+from ausbutler.interface import Interface
 
 args = sys.argv[1:]
 if len(args) == 0:

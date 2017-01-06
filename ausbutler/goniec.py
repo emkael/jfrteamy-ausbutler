@@ -1,5 +1,7 @@
-from .tour_config import Constants
 import socket
+
+from .tour_config import Constants
+
 
 class Goniec(object):
     def __init__(self, config):
