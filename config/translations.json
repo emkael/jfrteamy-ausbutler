@@ -4,5 +4,5 @@
     "NORMALIZED_CLASSIFICATION": {"pl": "INDYWIDUALNA KLASYFIKACJA BUTLERA ZNORMALIZOWANEGO",
                                   "en": "INDIVIDUAL NORMALIZED BUTLER CLASSIFICATION"},
     "HEADER_OPPS": {"pl": "śr.&nbsp;przec.", "en": "opp.&nbsp;ave."},
-    "HEADER_NORMALIZED": {"pl": "znormalizowany", "en": "normalized"}
+    "HEADER_NORMALIZED": {"pl": "znorm.", "en": "normalized"}
 }
