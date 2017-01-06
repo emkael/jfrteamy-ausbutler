@@ -1,0 +1,65 @@
+{% macro separator(cols) %}
+<tr>
+  <td class="e" colspan="{{cols}}">&nbsp;</td>
+</tr>
+{% endmacro %}
+
+{% macro previous_rounds(segments, segment_limit, prefix) %}
+<tr>
+  <td class="bdnl12" colspan="{{segment_limit+5}}">
+    {{"HEADER_PREV_ROUNDS"|translate}}
+    {% for segment in segments[0:-segment_limit] %}
+    |<a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+      {{segment['round']}}-{{segment['segment']}}
+    </a>
+    {% endfor %}
+    |
+  </td>
+</tr>
+<tr>
+  <td class="e" colspan="{{segment_limit+5}}">&nbsp;</td>
+</tr>
+{% endmacro %}
+
+{% macro table_header(segments, segment_limit, prefix) %}
+<tr>
+  <td class="bdcc12">{{"HEADER_PLACE"|translate}}</td>
+  <td class="bdcc2">&nbsp;</td>
+  <td class="bdcc2">{{"HEADER_TEAM"|translate}}</td>
+  <td class="bdcc2">{{"HEADER_IMPBRD"|translate}}</td>
+  <td class="bdcc2">{{"HEADER_BOARDS"|translate}}</td>
+  {% for segment in segments[-segment_limit:] %}
+  <td class="bdcc2">
+    <a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+      {{segment['round']}}-{{segment['segment']}}
+    </a>
+  </td>
+  {% endfor %}
+</tr>
+{% endmacro %}
+
+{% macro table_player(player, segment_limit) %}
+<tr>
+  <td class="bdc1">{{player['place']}}</td>
+  <td class="bd">{{player['name']}}</td>
+  <td class="bd">{{player['team']}}</td>
+  <td class="bdc">{{'%.2f' % player['sum']}}</td>
+  <td class="bdc">{{player['count']}}</td>
+  {% for result in player['results'][-segment_limit:] %}
+  {% if result != '' %}
+  <td class="bdc">{{'%+.2f' % result}}</td>
+  {% else %}
+  <td class="bdc">&nbsp;</td>
+  {% endif %}
+  {% endfor %}
+</tr>
+{% endmacro %}
+
+{% macro footer(date, time) %}
+<p class="vs"></p>
+<p class="f">
+  {{"FOOTER_ANALYSIS"|translate}}, &copy;William Bailey&#39;1999<br />
+  &nbsp;Admin&nbsp;&copy;Jan Romański&#39;2005,&nbsp;jfrteamy-ausbutler&nbsp;&copy;Michał Klichowicz&#39;2017{{"FOOTER_GENERATED"|translate}}
+  {{date}}{{"FOOTER_AT"|translate}}{{time}}{{"FOOTER_OPTIMIZED"|translate}}
+</p>
+{% endmacro %}

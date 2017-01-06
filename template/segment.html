@@ -1,3 +1,4 @@
+{% from 'macros.html' import separator, footer %}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
@@ -19,15 +20,11 @@
           {{logoh}}
         </td>
       </tr>
-      <tr>
-        <td class="e" colspan="3">&nbsp;</td>
-      </tr>
+      {{ separator(3) }}
       <tr>
         <td class="bdnt12" colspan="3">{{"BUTLER_ROUND"|translate}}{{round_no}} {{"SEGMENT"|translate}}{{segment_no}}</td>
       </tr>
-      <tr>
-        <td class="e" colspan="3">&nbsp;</td>
-      </tr>
+      {{ separator(3) }}
       <tr valign="top">
         <td>
           <table cellspacing="0">
@@ -70,11 +67,6 @@
         </td>
       </tr>
     </table>
-    <p class="vs"></p>
-    <p class="f">
-      {{"FOOTER_ANALYSIS"|translate}}, &copy;William Bailey&#39;1999<br />
-      &nbsp;Admin&nbsp;&copy;Jan Romański&#39;2005,&nbsp;jfrteamy-ausbutler&nbsp;&copy;Michał Klichowicz&#39;2017{{"FOOTER_GENERATED"|translate}}
-      {{date}}{{"FOOTER_AT"|translate}}{{time}}{{"FOOTER_OPTIMIZED"|translate}}
-    </p>
+    {{ footer(date, time) }}
   </body>
 </html>
