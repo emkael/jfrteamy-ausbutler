@@ -7,7 +7,7 @@ class Goniec(object):
     def __init__(self, config):
         self.config = config
 
-    def send(self, files=[]):
+    def send(self, files):
         if self.config['enabled']:
             content_lines = [Constants.path] + files + ['bye', '']
             goniec = socket.socket()

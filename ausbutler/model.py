@@ -9,12 +9,14 @@ from .db import get_session
 Base = declarative_base()
 session = get_session()
 
+
 class Team(Base):
     __table__ = Table('teams', MetaData(bind=session.bind),
                       autoload=True)
 
     def __repr__(self):
         return self.shortname.encode('utf8')
+
 
 class Player(Base):
     __table__ = Table('players', MetaData(bind=session.bind),
@@ -26,6 +28,7 @@ class Player(Base):
     def __repr__(self):
         return ('%s %s' % (self.gname, self.sname)).encode('utf8')
 
+
 class AusButler(Base):
     __tablename__ = 'aus_butler'
     id = Column(Integer, primary_key=True)
@@ -36,7 +39,10 @@ class AusButler(Base):
     opp_score = Column(Float)
     corrected_score = Column(Float)
     board_count = Column(Integer)
-    player = relationship('Player', uselist=False, foreign_keys=[id], primaryjoin='AusButler.id == Player.id')
+    player = relationship('Player',
+                          uselist=False,
+                          foreign_keys=[id],
+                          primaryjoin='AusButler.id == Player.id')
 
     @cached_property
     def table(self):
@@ -56,10 +62,12 @@ class AusButler(Base):
                                                self.opp_score or 0.0,
                                                self.corrected_score or 0.0)
 
+
 class Butler(Base):
     __table__ = Table('butler', MetaData(bind=session.bind),
                       Column('id', Integer, primary_key=True),
                       autoload=True)
+
 
 class Score(Base):
     __table__ = Table('scores', MetaData(bind=session.bind),
@@ -70,6 +78,7 @@ class Score(Base):
                       Column('board', Integer, primary_key=True),
                       autoload=True)
 
+
 class Segment(Base):
     __table__ = Table('segments', MetaData(bind=session.bind),
                       Column('rnd', Integer, primary_key=True),
@@ -78,7 +87,7 @@ class Segment(Base):
                       autoload=True)
 
     count_cache = {
-        (b.rnd, b.segment, b.tabl) : {
+        (b.rnd, b.segment, b.tabl): {
             'open': int(b.open), 'closed': int(b.closed)
         } for b in
         session.query(
@@ -92,20 +101,24 @@ class Segment(Base):
     def butler_count(self):
         return Segment.count_cache[(self.rnd, self.segment, self.tabl)]
 
+
 class Translation(Base):
     __table__ = Table('logoh', MetaData(bind=session.bind),
                       Column('id', Integer, primary_key=True),
                       autoload=True)
+
 
 class Admin(Base):
     __table__ = Table('admin', MetaData(bind=session.bind),
                       Column('shortname', String, primary_key=True),
                       autoload=True)
 
+
 class Params(Base):
     __table__ = Table('params', MetaData(bind=session.bind),
                       Column('datasource', Integer, primary_key=True),
                       autoload=True)
+
 
 class Parameters(Base):
     __table__ = join(Admin, Params, literal(True))

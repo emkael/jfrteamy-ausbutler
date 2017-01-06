@@ -7,6 +7,7 @@ def cutoff(score, cutoff_point=32, cutoff_rate=0.1):
         score += cutoff_point
     return score * sign
 
+
 def get_opponents(butler, player):
     table = butler.table
     if player in [table.openE, table.openW]:
@@ -18,6 +19,7 @@ def get_opponents(butler, player):
     if player in [table.closeN, table.closeS]:
         return [table.closeE, table.closeW]
 
+
 def get_room(butler, player):
     table = butler.table
     if player in [table.openE, table.openW, table.openN, table.openS]:
@@ -25,16 +27,20 @@ def get_room(butler, player):
     if player in [table.closeE, table.closeW, table.closeN, table.closeS]:
         return 'closed'
 
+
 def get_line(butler, player):
     table = butler.table
     room = get_room(butler, player).upper()
-    direction = 'NS' if player in [table.openN, table.openS, table.closeN, table.closeS] else 'EW'
+    direction = 'NS' if player in [
+        table.openN, table.openS, table.closeN, table.closeS
+    ] else 'EW'
     return '%s_%s' % (room, direction)
+
 
 def normalize(butler, opp_factor=0.5):
     if butler.board_count == 0:
         return 0.0
     return (
-        butler.cut_score / butler.board_count
-        + butler.opp_score * opp_factor
+        butler.cut_score / butler.board_count +
+        butler.opp_score * opp_factor
     ) * butler.board_count

@@ -20,7 +20,6 @@ class Interface(object):
         self.template = Environment(loader=FileSystemLoader('template'))
         self.template.filters['translate'] = self.translation.get_translation
 
-
     def calculate_all(self):
         self.init_db()
         self.populate_db()
@@ -63,8 +62,9 @@ class Interface(object):
                         opps[1]: {'sum': 0.0, 'count': 0}}
             for opp_butler in butlers:
                 if opp_butler.id in opps \
-                   and (opp_butler.match < butler.match or \
-                        (opp_butler.match == butler.match and opp_butler.segment <= butler.segment)):
+                   and (opp_butler.match < butler.match or
+                        (opp_butler.match == butler.match and
+                         opp_butler.segment <= butler.segment)):
                     averages[opp_butler.id]['sum'] += opp_butler.cut_score
                     averages[opp_butler.id]['count'] += opp_butler.board_count
             butler.opp_score = sum(
@@ -118,22 +118,32 @@ class Interface(object):
                     round_no, segment_no
                 )
                 results = {}
-                for butler in self.session.query(AusButler).filter(AusButler.match == round_no, AusButler.segment == segment_no):
+                for butler in self.session.query(AusButler).filter(
+                        AusButler.match == round_no,
+                        AusButler.segment == segment_no):
                     line = 'TABLE_%s' % (get_line(butler, butler.id))
-                    position = '%d%s' % (butler.table.tabl, self.translation.get_translation(line))
+                    position = '%d%s' % (
+                        butler.table.tabl,
+                        self.translation.get_translation(line)
+                    )
                     if position not in results:
                         results[position] = {'players': []}
-                    results[position]['players'].append(str(butler.player).decode('utf8'))
+                    results[position]['place'] = ''
+                    results[position]['players'].append(
+                        str(butler.player).decode('utf8'))
                     results[position]['position'] = position
-                    results[position]['team'] = str(butler.player.team_).decode('utf8')
+                    results[position]['team'] = str(
+                        butler.player.team_).decode('utf8')
                     results[position]['score'] = butler.score
                     results[position]['opp_score'] = butler.opp_score
                     results[position]['norm_score'] = butler.corrected_score
-                results = sorted(results.values(), key=lambda r: r['norm_score'], reverse=True)
+                results = sorted(results.values(),
+                                 key=lambda r: r['norm_score'], reverse=True)
                 place = 1
                 previous = None
                 for r in range(0, len(results)):
-                    results[r]['place'] = place if results[r]['norm_score'] != previous else ''
+                    if results[r]['norm_score'] != previous:
+                        results[r]['place'] = place
                     previous = results[r]['norm_score']
                     place += 1
                 file(path.join(Constants.path, filename), 'w').write(
@@ -143,7 +153,10 @@ class Interface(object):
                         'round_no': round_no,
                         'segment_no': segment_no,
                         'results': results,
-                        'boards': range(first_board, first_board + Constants.boardspersegment),
+                        'boards': range(
+                            first_board,
+                            first_board + Constants.boardspersegment
+                        ),
                         'date': datetime.now().strftime('%Y-%m-%d'),
                         'time': datetime.now().strftime('%H:%M')
                     }).encode('utf8')
@@ -172,13 +185,20 @@ class Interface(object):
                 }
             players[butler.id]['sum'] += butler.corrected_score
             players[butler.id]['count'] += butler.board_count
-            players[butler.id]['results'][(butler.match - 1) * Constants.segmentsperround + butler.segment - 1] = butler.corrected_score
+            players[butler.id]['results'][
+                (butler.match - 1) * Constants.segmentsperround +
+                butler.segment - 1
+            ] = butler.corrected_score
         for player in players.values():
             if player['count'] > 0:
                 player['sum'] /= player['count']
-        players = sorted(players.values(), key=lambda p: p['sum'], reverse=True)
-        board_threshold = Constants.boardspersegment * Constants.segmentsperround * \
-                          (Constants.rnd + (Constants.roundcnt * (Constants.minbutler / 100.0 - 1)))
+        players = sorted(players.values(),
+                         key=lambda p: p['sum'], reverse=True)
+        board_threshold = Constants.boardspersegment
+        board_threshold *= Constants.segmentsperround
+        board_threshold *= Constants.rnd + (
+            Constants.roundcnt * (Constants.minbutler / 100.0 - 1)
+        )
         above_threshold = []
         below_threshold = []
         for player in players:
