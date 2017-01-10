@@ -54,6 +54,14 @@ class Interface(object):
                         self.session.add(aus_b)
         self.session.commit()
 
+    def __filter_opp_score(self, butler, opp_butler):
+        if self.config['only_current']:
+            return opp_butler.match < butler.match or \
+                (opp_butler.match == butler.match and \
+                 opp_butler.segment <= butler.segment)
+        else:
+            return True
+
     def opp_scores(self):
         butlers = self.session.query(AusButler).all()
         for butler in butlers:
@@ -62,9 +70,7 @@ class Interface(object):
                         opps[1]: {'sum': 0.0, 'count': 0}}
             for opp_butler in butlers:
                 if opp_butler.id in opps \
-                   and (opp_butler.match < butler.match or
-                        (opp_butler.match == butler.match and
-                         opp_butler.segment <= butler.segment)):
+                   and self.__filter_opp_score(butler, opp_butler):
                     averages[opp_butler.id]['sum'] += opp_butler.cut_score
                     averages[opp_butler.id]['count'] += opp_butler.board_count
             butler.opp_score = sum(

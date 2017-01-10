@@ -2,5 +2,6 @@
     "cutoff_point": 32,
     "cutoff_rate": 0.1,
     "opponent_factor": 0.5,
+    "only_current": 0,
     "segments_in_table_limit": 10
 }
