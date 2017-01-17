@@ -44,3 +44,9 @@ def normalize(butler, opp_factor=0.5):
         butler.cut_score / butler.board_count +
         butler.opp_score * opp_factor
     ) * butler.board_count
+
+def get_old_normbutler(results, id):
+    for row in results:
+        if row.id == id:
+            return row
+    return None

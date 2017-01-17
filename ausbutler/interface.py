@@ -4,8 +4,10 @@ from datetime import datetime
 from os import path
 
 from jinja2 import Environment, FileSystemLoader
+from sqlalchemy import text
+from sqlalchemy.exc import ProgrammingError
 
-from .butler import cutoff, get_line, get_opponents, get_room, normalize
+from .butler import cutoff, get_line, get_opponents, get_room, normalize, get_old_normbutler
 from .db import get_session
 from .model import AusButler, Butler
 from .tour_config import Constants, Translations
@@ -34,6 +36,30 @@ class Interface(object):
 
     def populate_db(self):
         self.session.query(AusButler).delete()
+        if Constants.oldbutler is not None:
+            old_bulter_query = text(
+                'SELECT * FROM %s.butler' % Constants.oldbutler)
+            old_normbutler_query = text(
+                'SELECT id, SUM(cut_score), SUM(corrected_score) FROM %s.aus_butler GROUP BY id' % Constants.oldbutler
+            )
+            try:
+                old_normbutler = self.session.execute(old_normbutler_query)
+                print 'WARNING: Old butler was normalized, but will not be normalized with scores from current tournament'
+            except ProgrammingError:
+                print 'WARNING: Old butler was not normalized, will only be used to calculate opponent score'
+                old_normbutler = None
+            for row in self.session.execute(old_bulter_query):
+                if row[2] > 0:
+                    old_norm = get_old_normbutler(old_normbutler, row[0]) if old_normbutler is not None else None
+                    aus_b = AusButler()
+                    aus_b.id = row[0]
+                    aus_b.match = 0
+                    aus_b.segment = 0
+                    aus_b.score = row[1] * row[2]
+                    aus_b.cut_score = old_norm[1] if old_norm is not None else aus_b.score
+                    aus_b.corrected_score = old_norm[2] if old_norm is not None else aus_b.score
+                    aus_b.board_count = row[2]
+                    self.session.add(aus_b)
         column_name = re.compile(r'^seg(\d+)_(\d+)$')
         for butler in self.session.query(Butler).all():
             for column, value in butler.__dict__.iteritems():
@@ -63,12 +89,14 @@ class Interface(object):
             return True
 
     def opp_scores(self):
-        butlers = self.session.query(AusButler).all()
+        butlers = self.session.query(AusButler).filter(
+            AusButler.match > 0).all()
+        opp_butlers = self.session.query(AusButler).all()
         for butler in butlers:
             opps = get_opponents(butler, butler.id)
             averages = {opps[0]: {'sum': 0.0, 'count': 0},
                         opps[1]: {'sum': 0.0, 'count': 0}}
-            for opp_butler in butlers:
+            for opp_butler in opp_butlers:
                 if opp_butler.id in opps \
                    and self.__filter_opp_score(butler, opp_butler):
                     averages[opp_butler.id]['sum'] += opp_butler.cut_score
@@ -80,7 +108,8 @@ class Interface(object):
         self.session.commit()
 
     def normalize_scores(self):
-        for butler in self.session.query(AusButler).all():
+        for butler in self.session.query(AusButler).filter(
+                AusButler.match > 0).all():
             butler.corrected_score = normalize(
                 butler, self.config['opponent_factor'])
         self.session.commit()
@@ -173,8 +202,19 @@ class Interface(object):
     def generate_table(self):
         template = self.template.get_template('table.html')
         filename = '%snormbutler.html' % (Constants.shortname)
+        old_prefix = None
         segments = []
         result_template = []
+        if Constants.oldbutler:
+            old_prefix = self.session.execute(text(
+                'SELECT shortname FROM %s.admin LIMIT 1' % Constants.oldbutler
+            )).fetchone()[0]
+            segments.append({
+                'round': 0, 'segment': 0,
+                'label': Constants.oldbutler,
+                'link': '%sleaderb.html' % old_prefix
+            })
+            result_template.append('')
         for rnd in range(1, Constants.rnd + 1):
             for segment in range(1, Constants.segmentsperround + 1):
                 segments.append({'round': rnd, 'segment': segment})
@@ -192,8 +232,8 @@ class Interface(object):
             players[butler.id]['sum'] += butler.corrected_score
             players[butler.id]['count'] += butler.board_count
             players[butler.id]['results'][
-                (butler.match - 1) * Constants.segmentsperround +
-                butler.segment - 1
+                ((butler.match - 1) * Constants.segmentsperround +
+                 butler.segment) if butler.match > 0 else 0
             ] = butler.corrected_score
         for player in players.values():
             if player['count'] > 0:

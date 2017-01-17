@@ -9,8 +9,17 @@
   <td class="bdnl12" colspan="{{segment_limit+5}}">
     {{"HEADER_PREV_ROUNDS"|translate}}
     {% for segment in segments[0:-segment_limit] %}
-    |<a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+    |
+    {% if 'link' in segment %}
+    <a href="{{segment['link']}}">
+    {% else %}
+    <a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+    {% endif %}
+      {% if 'label' in segment %}
+      {{segment['label']}}
+      {% else %}
       {{segment['round']}}-{{segment['segment']}}
+      {% endif %}
     </a>
     {% endfor %}
     |
@@ -30,8 +39,16 @@
   <td class="bdcc2">{{"HEADER_BOARDS"|translate}}</td>
   {% for segment in segments[-segment_limit:] %}
   <td class="bdcc2">
+    {% if 'link' in segment %}
+    <a href="{{segment['link']}}">
+    {% else %}
     <a href="{{prefix}}normbutler{{segment['round']}}-{{segment['segment']}}.htm">
+    {% endif %}
+      {% if 'label' in segment %}
+      {{segment['label']}}
+      {% else %}
       {{segment['round']}}-{{segment['segment']}}
+      {% endif %}
     </a>
   </td>
   {% endfor %}
