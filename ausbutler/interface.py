@@ -21,6 +21,7 @@ class Interface(object):
         self.translation = Translations()
         self.template = Environment(loader=FileSystemLoader('template'))
         self.template.filters['translate'] = self.translation.get_translation
+        self.old_butler_normalized = False
 
     def calculate_all(self):
         self.init_db()
@@ -44,6 +45,7 @@ class Interface(object):
             )
             try:
                 old_normbutler = self.session.execute(old_normbutler_query)
+                self.old_butler_normalized = True
                 print 'WARNING: Old butler was normalized, but will not be normalized with scores from current tournament'
             except ProgrammingError:
                 print 'WARNING: Old butler was not normalized, will only be used to calculate opponent score'
@@ -83,7 +85,7 @@ class Interface(object):
     def __filter_opp_score(self, butler, opp_butler):
         if self.config['only_current']:
             return opp_butler.match < butler.match or \
-                (opp_butler.match == butler.match and \
+                (opp_butler.match == butler.match and
                  opp_butler.segment <= butler.segment)
         else:
             return True
@@ -212,7 +214,7 @@ class Interface(object):
             segments.append({
                 'round': 0, 'segment': 0,
                 'label': Constants.oldbutler,
-                'link': '%sleaderb.html' % old_prefix
+                'link': ('%snormbutler.html' if self.old_butler_normalized else '%sbutler.html') % old_prefix
             })
             result_template.append('')
         for rnd in range(1, Constants.rnd + 1):
