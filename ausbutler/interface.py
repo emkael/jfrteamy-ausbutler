@@ -48,7 +48,7 @@ class Interface(object):
                 self.old_butler_normalized = True
                 print 'WARNING: Old butler was normalized, but will not be normalized with scores from current tournament'
             except ProgrammingError:
-                print 'WARNING: Old butler was not normalized, but will be used to calculate opponent score'
+                print 'WARNING: Old butler was not normalized, approximation from score per board will be used'
                 old_normbutler = None
             for row in self.session.execute(old_bulter_query):
                 if row[2] > 0:
