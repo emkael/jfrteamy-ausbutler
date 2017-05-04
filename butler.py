@@ -6,7 +6,8 @@ from ausbutler.interface import Interface
 
 
 def main():
-    args = sys.argv[1:]
+    nowait = 'nowait' not in sys.argv
+    args = [arg for arg in sys.argv[1:] if arg != 'nowait']
     if len(args) == 0:
         args = ['calculate', 'generate', 'send']
 
@@ -20,6 +21,9 @@ def main():
         if 'send' in args:
             client = Goniec(load_config('goniec'))
             client.send(files)
+
+    if nowait:
+        raw_input('Press any key to continue...')
 
 if __name__ == '__main__':
     main()
