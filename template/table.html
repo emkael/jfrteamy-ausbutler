@@ -31,9 +31,9 @@
       </tr>
       {{ separator(segment_limit+5) }}
       {% if segments|length > segment_limit %}
-        {{ previous_rounds(segments, segment_limit, prefix) }}
+        {{ previous_rounds(segments, segment_limit, prefix, per_round) }}
       {% endif %}
-      {{ table_header(segments, segment_limit, prefix) }}
+      {{ table_header(segments, segment_limit, prefix, per_round) }}
       {% for player in above_threshold %}
         {{ table_player(player, segment_limit) }}
       {% endfor %}
@@ -49,9 +49,9 @@
       </tr>
       {{ separator(segment_limit+5) }}
       {% if segments|length > segment_limit %}
-        {{ previous_rounds(segments, segment_limit, prefix) }}
+        {{ previous_rounds(segments, segment_limit, prefix, per_round) }}
       {% endif %}
-      {{ table_header(segments, segment_limit, prefix) }}
+      {{ table_header(segments, segment_limit, prefix, per_round) }}
       {% for player in below_threshold %}
         {{ table_player(player, segment_limit) }}
       {% endfor %}

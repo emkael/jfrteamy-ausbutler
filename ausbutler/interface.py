@@ -62,14 +62,17 @@ class Interface(object):
                     aus_b.corrected_score = old_norm[2] if old_norm is not None else aus_b.score
                     aus_b.board_count = row[2]
                     self.session.add(aus_b)
-        column_name = re.compile(r'^seg(\d+)_(\d+)$')
+        column_name = re.compile(r'^seg(\d+)(_(\d+))?$')
         for butler in self.session.query(Butler).all():
             for column, value in butler.__dict__.iteritems():
                 column_match = re.match(column_name, column)
                 if column_match:
                     if value is not None:
                         round_no = int(column_match.group(1), base=10)
-                        segm_no = int(column_match.group(2))
+                        if Constants.segmentsperround > 1:
+                            segm_no = int(column_match.group(3))
+                        else:
+                            segm_no = 1
                         if round_no < Constants.rnd or (
                             round_no == Constants.rnd and segm_no <= Constants.segm):
                             aus_b = AusButler()
@@ -193,6 +196,7 @@ class Interface(object):
                         'logoh': Constants.logoh,
                         'round_no': round_no,
                         'segment_no': segment_no,
+                        'per_round': Constants.segmentsperround,
                         'results': results,
                         'boards': range(
                             first_board,
@@ -273,6 +277,7 @@ class Interface(object):
                 'percent_threshold': Constants.minbutler,
                 'segments': segments,
                 'segment_limit': self.config['segments_in_table_limit'],
+                'per_round': Constants.segmentsperround,
                 'above_threshold': above_threshold,
                 'below_threshold': below_threshold,
                 'date': datetime.now().strftime('%Y-%m-%d'),

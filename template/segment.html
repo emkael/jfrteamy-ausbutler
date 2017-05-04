@@ -22,7 +22,12 @@
       </tr>
       {{ separator(3) }}
       <tr>
-        <td class="bdnt12" colspan="3">{{"BUTLER_ROUND"|translate}}{{round_no}} {{"SEGMENT"|translate}}{{segment_no}}</td>
+        <td class="bdnt12" colspan="3">
+          {{"BUTLER_ROUND"|translate}}{{round_no}}
+          {% if per_round > 1 %}
+          {{"SEGMENT"|translate}}{{segment_no}}
+          {% endif %}
+        </td>
       </tr>
       {{ separator(3) }}
       <tr valign="top">

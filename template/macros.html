@@ -18,7 +18,11 @@
       {% if 'label' in segment %}
       {{segment['label']}}
       {% else %}
-      {{segment['round']}}-{{segment['segment']}}
+        {% if per_round > 1 %}
+        {{segment['round']}}-{{segment['segment']}}
+        {% else %}
+        {{segment['round']}}
+        {% endif %}
       {% endif %}
     </a>
     {% endfor %}
@@ -30,7 +34,7 @@
 </tr>
 {% endmacro %}
 
-{% macro table_header(segments, segment_limit, prefix) %}
+{% macro table_header(segments, segment_limit, prefix, per_round) %}
 <tr>
   <td class="bdcc12">{{"HEADER_PLACE"|translate}}</td>
   <td class="bdcc2">&nbsp;</td>
@@ -47,7 +51,11 @@
       {% if 'label' in segment %}
       {{segment['label']}}
       {% else %}
-      {{segment['round']}}-{{segment['segment']}}
+        {% if per_round > 1 %}
+        {{segment['round']}}-{{segment['segment']}}
+        {% else %}
+        {{segment['round']}}
+        {% endif %}
       {% endif %}
     </a>
   </td>
