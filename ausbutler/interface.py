@@ -239,7 +239,7 @@ class Interface(object):
             players[butler.id]['count'] += butler.board_count
             players[butler.id]['results'][
                 ((butler.match - 1) * Constants.segmentsperround +
-                 butler.segment) if butler.match > 0 else 0
+                 (butler.segment - 1)) if butler.match > 0 else 0
             ] = butler.corrected_score
         for player in players.values():
             if player['count'] > 0:
