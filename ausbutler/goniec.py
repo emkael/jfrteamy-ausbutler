@@ -9,8 +9,11 @@ class Goniec(object):
 
     def send(self, files):
         if self.config['enabled']:
-            content_lines = [Constants.path] + files + ['bye', '']
-            goniec = socket.socket()
-            goniec.connect((self.config['host'], self.config['port']))
-            goniec.sendall('\n'.join(content_lines))
-            goniec.close()
+            try:
+                content_lines = [Constants.path] + files + ['bye', '']
+                goniec = socket.socket()
+                goniec.connect((self.config['host'], self.config['port']))
+                goniec.sendall('\n'.join(content_lines))
+                goniec.close()
+            except socket.error:
+                print 'WARNING: unable to send files via Goniec'
