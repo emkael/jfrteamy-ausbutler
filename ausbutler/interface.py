@@ -68,18 +68,22 @@ class Interface(object):
                 column_match = re.match(column_name, column)
                 if column_match:
                     if value is not None:
-                        aus_b = AusButler()
-                        aus_b.id = butler.id
-                        aus_b.match = int(column_match.group(1), base=10)
-                        aus_b.segment = int(column_match.group(2))
-                        aus_b.score = float(value)
-                        aus_b.cut_score = cutoff(
-                            aus_b.score,
-                            self.config['cutoff_point'],
-                            self.config['cutoff_rate'])
-                        aus_b.board_count = aus_b.table.butler_count[
-                            get_room(aus_b, butler.id)]
-                        self.session.add(aus_b)
+                        round_no = int(column_match.group(1), base=10)
+                        segm_no = int(column_match.group(2))
+                        if round_no < Constants.rnd or (
+                            round_no == Constants.rnd and segm_no <= Constants.segm):
+                            aus_b = AusButler()
+                            aus_b.id = butler.id
+                            aus_b.match = round_no
+                            aus_b.segment = segm_no
+                            aus_b.score = float(value)
+                            aus_b.cut_score = cutoff(
+                                aus_b.score,
+                                self.config['cutoff_point'],
+                                self.config['cutoff_rate'])
+                            aus_b.board_count = aus_b.table.butler_count[
+                                get_room(aus_b, butler.id)]
+                            self.session.add(aus_b)
         self.session.commit()
 
     def __filter_opp_score(self, butler, opp_butler):
