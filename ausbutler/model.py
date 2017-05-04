@@ -4,10 +4,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import Float, Integer, String
 
+from .config import load_config
 from .db import get_session
 
 Base = declarative_base()
-session = get_session()
+session = get_session(load_config('db'))
 
 
 class Team(Base):

@@ -2,7 +2,7 @@ from .config import load_config
 from .db import get_session
 from .model import Parameters, Translation
 
-session = get_session()
+session = get_session(load_config('db'))
 
 
 class Translations(object):

@@ -8,6 +8,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import ProgrammingError
 
 from .butler import cutoff, get_line, get_opponents, get_room, normalize, get_old_normbutler
+from .config import load_config
 from .db import get_session
 from .model import AusButler, Butler
 from .tour_config import Constants, Translations
@@ -16,7 +17,9 @@ from .tour_config import Constants, Translations
 class Interface(object):
 
     def __init__(self, config):
-        self.session = get_session()
+        db_config = load_config('db')
+        print 'Tournament name: %s' % (db_config['db'])
+        self.session = get_session(db_config)
         self.config = config
         self.translation = Translations()
         self.template = Environment(loader=FileSystemLoader('template'))
