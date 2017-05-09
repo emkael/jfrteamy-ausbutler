@@ -6,7 +6,7 @@ Narzędzie umożliwiające obliczanie i prezentację znormalizowanego butlera (t
 Instalacja
 ----------
 
-1. Ściągnąć paczkę z programem ze strony autora.
+1. Ściągnąć paczkę z programem ze [strony autora](https://github.com/emkael/jfrteamy-ausbutler/releases).
 2. Rozpakować paczkę do pożądanego katalogu.
 3. Skonfigurować odpowiednie połączenie z bazą danych.
 4. Wywołać w katalogu programu plik `butler.exe`.
@@ -29,7 +29,9 @@ Pliki konfiguracyjne
 
 Aplikacja korzysta z pięciu plików konfiguracyjnych, formatu JSON, umiejscowionych w podkatalogu `config` katalogu programu.
 
-`db.json`
+~~~
+
+[`db.json`](config/db.json.EXAMPLE)
 
 Określa parametry połączenia z bazą danych turnieju:
 
@@ -38,7 +40,9 @@ Określa parametry połączenia z bazą danych turnieju:
  * `db` - nazwę bazy turnieju
  * `host` - serwer bazy danych
 
-`butler.json`
+~~~
+ 
+[`butler.json`](config/butler.json)
 
 Definiuje parametry obliczania butlera znormalizowanego.
 
@@ -55,14 +59,18 @@ Wszystkie obliczenia nie zależą od sposobu wyliczania nieznormalizowanego butl
 
 W końcu, parametr `segments_in_table_limit` określa, ile segmentów najnowszych widocznych jest szczegółowo w zbiorczej tabeli znormalizowanego butlera (`PREFIXnormbutler.html`). Wszystkie wcześniejsze segmenty dołączone są w nagłówku tabeli, zgodnie z konwencją JFR Teamy.
 
-`goniec.json`
+~~~
+
+[`goniec.json`](config/goniec.json)
 
 Określa standardowe parametry przesyłania plików Gońcem.
 
  * `enabled` włącza wysyłanie Gońcem
  * `host` i `port` wskazują lokalizację Gońca
 
-`logoh.json`
+~~~
+
+[`logoh.json`](config/logoh.json)
 
 Ustawia mapowanie łańcuchów tekstowych używanych przez aplikację w generowanych stronach na identyfikatory do pobrania tekstów z bazy danych turnieju. Przeważnie nie wymaga ingerencji.
 
@@ -70,7 +78,9 @@ Każdy tekst powinien znajdować się w tabeli `logoh` bazy danych turnieju.
 
 **UWAGA**: w przypadku wystąpienia w programie błędu `KeyError: ID_TŁUMACZENIA` w liniach wskazujących na pobieranie tłumaczeń, należy do bazy danych turnieju w JFR Teamy wczytać ponownie poprawny plik `.language`.
 
-`translation.json`
+~~~
+
+[`translation.json`](config/translation.json)
 
 Ustawia teksty tłumaczeń, używane w stronach generowanych przez program, a niezawarte domyślnie w bazach turniejów JFR Teamy.
 
@@ -83,10 +93,10 @@ Szablony stron
 
 Katalog `template` zawiera w pełni modyfikowalne szablony stron generowanych przez program.
 
- * `table.html` to szablon tabeli zbiorczej znormalizowanego butlera - pliku `PREFIXnormbutler.html`
- * `frame.html` to szablon ramki wyświetlającej wyniki znormalizowanego butlera pojedynczego segmentu - plików `PREFIXbutlerSEGMENT.htm`
- * `segment.html` to szablon tabeli wyników znormalizowanego butlera dla poszczególnych par w pojedynczym segmencie - plików `PREFIXbutlerSEGMENT.html`
- * `macros.html` zawiera szablony wstawek używanych w różnych miejscach innych szablonów - nagłówków, separatorów, wierszy tabeli wyników czy stopki stron
+ * [`table.html`](template/table.html) to szablon tabeli zbiorczej znormalizowanego butlera - pliku `PREFIXnormbutler.html`
+ * [`frame.html`](template/frame.html) to szablon ramki wyświetlającej wyniki znormalizowanego butlera pojedynczego segmentu - plików `PREFIXbutlerSEGMENT.htm`
+ * [`segment.html`](template/segment.html) to szablon tabeli wyników znormalizowanego butlera dla poszczególnych par w pojedynczym segmencie - plików `PREFIXbutlerSEGMENT.html`
+ * [`macros.html`](template/macros.html) zawiera szablony wstawek używanych w różnych miejscach innych szablonów - nagłówków, separatorów, wierszy tabeli wyników czy stopki stron
 
 W większości przypadków użycia nie ma potrzeby modyfikowania tych szablonów - są one zgodne z formatowaniem JFR Teamy.
 
