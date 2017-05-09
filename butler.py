@@ -22,7 +22,7 @@ def main():
                 client = Goniec(load_config('goniec'))
                 client.send(files)
     except Exception as e:
-        print str(e)
+        print 'ERROR: %s: %s' % (type(e).__name__, str(e))
 
     if nowait:
         raw_input('Press any key to continue...')
