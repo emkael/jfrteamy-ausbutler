@@ -29,7 +29,7 @@ Pliki konfiguracyjne
 
 Aplikacja korzysta z pięciu plików konfiguracyjnych, formatu JSON, umiejscowionych w podkatalogu `config` katalogu programu.
 
-~~~
+---
 
 [`db.json`](config/db.json.EXAMPLE)
 
@@ -40,7 +40,7 @@ Określa parametry połączenia z bazą danych turnieju:
  * `db` - nazwę bazy turnieju
  * `host` - serwer bazy danych
 
-~~~
+---
  
 [`butler.json`](config/butler.json)
 
@@ -59,7 +59,7 @@ Wszystkie obliczenia nie zależą od sposobu wyliczania nieznormalizowanego butl
 
 W końcu, parametr `segments_in_table_limit` określa, ile segmentów najnowszych widocznych jest szczegółowo w zbiorczej tabeli znormalizowanego butlera (`PREFIXnormbutler.html`). Wszystkie wcześniejsze segmenty dołączone są w nagłówku tabeli, zgodnie z konwencją JFR Teamy.
 
-~~~
+---
 
 [`goniec.json`](config/goniec.json)
 
@@ -68,7 +68,7 @@ Określa standardowe parametry przesyłania plików Gońcem.
  * `enabled` włącza wysyłanie Gońcem
  * `host` i `port` wskazują lokalizację Gońca
 
-~~~
+---
 
 [`logoh.json`](config/logoh.json)
 
@@ -78,7 +78,7 @@ Każdy tekst powinien znajdować się w tabeli `logoh` bazy danych turnieju.
 
 **UWAGA**: w przypadku wystąpienia w programie błędu `KeyError: ID_TŁUMACZENIA` w liniach wskazujących na pobieranie tłumaczeń, należy do bazy danych turnieju w JFR Teamy wczytać ponownie poprawny plik `.language`.
 
-~~~
+---
 
 [`translation.json`](config/translation.json)
 
@@ -114,6 +114,6 @@ Licencja
 
 Aplikacja udostępniana jest na [uproszczonej, 2-punktowej licencji BSD](LICENSE).
 
-~~~
+---
 
 `Breathe on, little sister, breathe on.`

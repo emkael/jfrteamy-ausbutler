@@ -29,7 +29,7 @@ Configuration files
 
 The application relies on five configuration files, JSON-formatted, placed in the `config` subdirectory.
 
-~~~
+---
 
 [`db.json`](config/db.json.EXAMPLE)
 
@@ -40,7 +40,7 @@ Defines event database connection parameters:
  * `db` - event database name
  * `host` - DB server location
 
-~~~
+---
  
 [`butler.json`](config/butler.json)
 
@@ -59,7 +59,7 @@ All calculations are independent from the way raw butler is calculated for all t
 
 Finally, the `segments_in_table_limit` parameters defines how many latest segments are presented in detail in the summary table for the normalized butler (`PREFIXnormbutler.html`). All the previous segments are included in the table header, in compliance with JFR Teamy convention.
 
-~~~
+---
 
 [`goniec.json`](config/goniec.json)
 
@@ -68,7 +68,7 @@ Defines standard parameters for Goniec transmission.
  * `enabled` turns the transmission on
  * `host` and `port` point to the Goniec location
 
-~~~
+---
 
 [`logoh.json`](config/logoh.json)
 
@@ -78,7 +78,7 @@ Every string should be present in the `logoh` table of the event database.
 
 **BEWARE**: in case the program raises `KeyError: NUMERIC_ID` error in lines responsible for translating strings, you should reload the correct `.language` into the JFR Teamy event database.
 
-~~~
+---
 
 [`translation.json`](config/translation.json)
 
@@ -114,6 +114,6 @@ License
 
 The application is distributed under a [simplified 2-clause BSD license](LICENSE).
 
-~~~
+---
 
 `Breathe on, little sister, breathe on.`
