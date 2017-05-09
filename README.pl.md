@@ -8,7 +8,7 @@ Instalacja
 
 1. Ściągnąć paczkę z programem ze [strony autora](https://github.com/emkael/jfrteamy-ausbutler/releases).
 2. Rozpakować paczkę do pożądanego katalogu.
-3. Skonfigurować odpowiednie połączenie z bazą danych.
+3. [Skonfigurować odpowiednie połączenie z bazą danych](#pliki-konfiguracyjne).
 4. Wywołać w katalogu programu plik `butler.exe`.
 
 Wywołanie programu
