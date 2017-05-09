@@ -48,10 +48,11 @@ Butler dla pary w danym segmencie obliczany jest w następujący sposób:
  * wynik powyżej `cutoff_point` zaliczany jest jedynie w części, określonej przez `cutoff_rate` (np. domyślne: `32` i `0.1` oznacza, że zaliczane jest 10% wyniku powyżej 32 IMP)
  * tak uzyskany wynik przeliczany jest na średnią na rozdanie
  * do niego dodawana jest średnia na rozdanie pary przeciwnej (z butler nieznormalizowanego), przeskalowana o parametr `opponent_factor` (np. domyślne `0.5` oznacza, że dodawana jest połowa średniej na rozdanie przeciwników)
+ * wynik przeliczany jest z powrotem na wartość w całym segmencie
  * jeśli ustawiony jest parametr `only_current`, średnia przeciwników wyliczana jest jedynie z niepóźniejszych segmentów - czyli tak wyliczony butler nie uwzględnia dla pierwszych segmentów średniej przeciwników z całych zawodów, ale wyniki dla wcześniejszych segmentów nie zmieniają się pod wpływem wyników kolejnych segmentów
 
 Wszystkie obliczenia nie zależą od sposobu wyliczania nieznormalizowanego butlera dla wszystkich par.
- 
+
 W końcu, parametr `segments_in_table_limit` określa, ile segmentów najnowszych widocznych jest szczegółowo w zbiorczej tabeli znormalizowanego butlera (`PREFIXnormbutler.html`). Wszystkie wcześniejsze segmenty dołączone są w nagłówku tabeli, zgodnie z konwencją JFR Teamy.
 
 `goniec.json`
@@ -60,7 +61,7 @@ Określa standardowe parametry przesyłania plików Gońcem.
 
  * `enabled` włącza wysyłanie Gońcem
  * `host` i `port` wskazują lokalizację Gońca
- 
+
 `logoh.json`
 
 Ustawia mapowanie łańcuchów tekstowych używanych przez aplikację w generowanych stronach na identyfikatory do pobrania tekstów z bazy danych turnieju. Przeważnie nie wymaga ingerencji.
@@ -102,3 +103,7 @@ Licencja
 --------
 
 Aplikacja udostępniana jest na [uproszczonej, 2-punktowej licencji BSD](LICENSE).
+
+~~~
+
+`Breathe on, little sister, breathe on.`
