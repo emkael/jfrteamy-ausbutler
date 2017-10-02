@@ -42,9 +42,9 @@ class Interface(object):
         self.session.query(AusButler).delete()
         if Constants.oldbutler is not None:
             old_bulter_query = text(
-                'SELECT * FROM %s.butler' % Constants.oldbutler)
+                'SELECT * FROM %s.butler WHERE id IN (SELECT id FROM players)' % Constants.oldbutler)
             old_normbutler_query = text(
-                'SELECT id, SUM(cut_score), SUM(corrected_score) FROM %s.aus_butler GROUP BY id' % Constants.oldbutler
+                'SELECT id, SUM(cut_score), SUM(corrected_score) FROM %s.aus_butler WHERE id IN (SELECT id FROM players) GROUP BY id' % Constants.oldbutler
             )
             try:
                 old_normbutler = self.session.execute(old_normbutler_query)
