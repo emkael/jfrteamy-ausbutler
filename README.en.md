@@ -8,7 +8,7 @@ Installation
 
 1. Download the program package from [author's website](https://github.com/emkael/jfrteamy-ausbutler/releases).
 2. Unpack it to the desired directory.
-3. Configure appropriate database connection.
+3. [Configure appropriate database connection](#configuration-files).
 4. Run `butler.exe` in application directory.
 
 Program invocation
