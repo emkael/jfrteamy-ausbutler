@@ -218,6 +218,7 @@ class Interface(object):
         old_prefix = None
         segments = []
         result_template = []
+        old_butler_present = False
         if Constants.oldbutler:
             old_prefix = self.session.execute(text(
                 'SELECT shortname FROM %s.admin LIMIT 1' % Constants.oldbutler
@@ -228,6 +229,7 @@ class Interface(object):
                 'link': ('%snormbutler.html' if self.old_butler_normalized else '%sbutler.html') % old_prefix
             })
             result_template.append('')
+            old_butler_present = True
         for rnd in range(1, Constants.rnd + 1):
             for segment in range(1, Constants.segmentsperround + 1):
                 segments.append({'round': rnd, 'segment': segment})
@@ -246,7 +248,7 @@ class Interface(object):
             players[butler.id]['count'] += butler.board_count
             players[butler.id]['results'][
                 ((butler.match - 1) * Constants.segmentsperround +
-                 (butler.segment - 1)) if butler.match > 0 else 0
+                 (butler.segment - 1) + old_butler_present) if butler.match > 0 else 0
             ] = butler.corrected_score
         for player in players.values():
             if player['count'] > 0:
