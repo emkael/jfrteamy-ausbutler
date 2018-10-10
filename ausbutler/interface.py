@@ -21,6 +21,7 @@ class Interface(object):
         print 'Tournament name: %s' % (db_config['db'])
         self.session = get_session(db_config)
         self.config = config
+        self.output_path = self.config.get('output_path', Constants.path)
         self.translation = Translations()
         self.template = Environment(loader=FileSystemLoader('template'))
         self.template.filters['translate'] = self.translation.get_translation
@@ -143,7 +144,7 @@ class Interface(object):
                     Constants.shortname,
                     round_no, segment_no
                 )
-                file(path.join(Constants.path, filename), 'w').write(
+                file(path.join(self.output_path, filename), 'w').write(
                     template.render({
                         'prefix': Constants.shortname,
                         'round_no': round_no,
@@ -193,7 +194,7 @@ class Interface(object):
                         results[r]['place'] = place
                     previous = results[r]['norm_score']
                     place += 1
-                file(path.join(Constants.path, filename), 'w').write(
+                file(path.join(self.output_path, filename), 'w').write(
                     template.render({
                         'prefix': Constants.shortname,
                         'logoh': Constants.logoh,
@@ -275,7 +276,7 @@ class Interface(object):
                     player['place'] = place
                 prev = player['sum']
                 place += 1
-        file(path.join(Constants.path, filename), 'w').write(
+        file(path.join(self.output_path, filename), 'w').write(
             template.render({
                 'prefix': Constants.shortname,
                 'logoh': Constants.logoh,
