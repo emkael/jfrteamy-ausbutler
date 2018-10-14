@@ -174,6 +174,8 @@ class Interface(object):
                         butler.table.tabl,
                         self.translation.get_translation(line)
                     )
+                    if butler.player is None:
+                        print 'WARNING: player ID=%d (round %d, segment %d) not in players database' % (butler.id, round_no, segment_no)
                     if position not in results:
                         results[position] = {'players': []}
                     results[position]['place'] = ''
@@ -181,7 +183,7 @@ class Interface(object):
                         str(butler.player).decode('utf8'))
                     results[position]['position'] = position
                     results[position]['team'] = str(
-                        butler.player.team_).decode('utf8')
+                        butler.player.team_).decode('utf8') if butler.player else ''
                     results[position]['score'] = butler.score
                     results[position]['opp_score'] = butler.opp_score
                     results[position]['norm_score'] = butler.corrected_score
@@ -240,7 +242,7 @@ class Interface(object):
             if butler.id not in players:
                 players[butler.id] = {
                     'name': str(butler.player).decode('utf8'),
-                    'team': str(butler.player.team_).decode('utf8'),
+                    'team': str(butler.player.team_).decode('utf8') if butler.player else None,
                     'sum': 0,
                     'count': 0,
                     'results': copy(result_template)
