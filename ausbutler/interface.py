@@ -175,7 +175,7 @@ class Interface(object):
                         self.translation.get_translation(line)
                     )
                     if butler.player is None:
-                        print 'WARNING: player ID=%d (round %d, segment %d) not in players database' % (butler.id, round_no, segment_no)
+                        print 'WARNING: player ID=%d (round %d, segment %d, position %s) not in players database' % (butler.id, round_no, segment_no, position)
                     if position not in results:
                         results[position] = {'players': []}
                     results[position]['place'] = ''
