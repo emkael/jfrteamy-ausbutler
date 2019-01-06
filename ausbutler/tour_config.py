@@ -29,7 +29,7 @@ class Translations(object):
                 Translations.detect_language()]
         elif missing_logoh_key:
             if key not in Translations.warned_missing_keys:
-                print 'WARNING: translation key "%s" not found in logoh table!' % (key)
+                print 'WARNING: translation key "%s (%d)" not found in logoh table!' % (key, Translations.translation_mapping[key])
                 Translations.warned_missing_keys.append(key)
         return '{{%s}}' % (key)
 
