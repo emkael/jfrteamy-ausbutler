@@ -41,7 +41,7 @@ Określa parametry połączenia z bazą danych turnieju:
  * `host` - serwer bazy danych
 
 ---
- 
+
 [`butler.json`](config/butler.json)
 
 Definiuje parametry obliczania butlera znormalizowanego.
@@ -58,6 +58,8 @@ Butler dla pary w danym segmencie obliczany jest w następujący sposób:
 Wszystkie obliczenia nie zależą od sposobu wyliczania nieznormalizowanego butlera dla wszystkich par.
 
 W końcu, parametr `segments_in_table_limit` określa, ile segmentów najnowszych widocznych jest szczegółowo w zbiorczej tabeli znormalizowanego butlera (`PREFIXnormbutler.html`). Wszystkie wcześniejsze segmenty dołączone są w nagłówku tabeli, zgodnie z konwencją JFR Teamy.
+
+Możliwe jest również ustawienie innej ścieżki wyjściowej niż ścieżka robocza turnieju. Odpowiada za to parametr `output_path`.
 
 ---
 

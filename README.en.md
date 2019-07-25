@@ -41,7 +41,7 @@ Defines event database connection parameters:
  * `host` - DB server location
 
 ---
- 
+
 [`butler.json`](config/butler.json)
 
 Defines butler calculation parameters.
@@ -58,6 +58,8 @@ Normalized butler for the pair in a segment is calculated as follows:
 All calculations are independent from the way raw butler is calculated for all the pairs.
 
 Finally, the `segments_in_table_limit` parameters defines how many latest segments are presented in detail in the summary table for the normalized butler (`PREFIXnormbutler.html`). All the previous segments are included in the table header, in compliance with JFR Teamy convention.
+
+It's also possible to set an output path different from tournament HTML path. Parameter `output_path` does that.
 
 ---
 
