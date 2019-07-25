@@ -9,6 +9,10 @@
     <meta name="Generator" content="jfr-aus-butler">
     <title>{{"PAGE_TITLE"|translate}}: {{"BUTLER"|translate}}, {{"ROUND"|translate}}{{round_no}}, {{"SEGMENT"|translate}}{{segment_no}}</title>
     <link rel="stylesheet" type="text/css" href="css/kolorki.css">
+    {% if favicon %}
+    <link rel="shortcut icon" href="images/{{favicon}}" type="image/x-icon">
+    <link rel="icon" href="images/{{favicon}}" type="image/x-icon">
+    {% endif %}
   </head>
   <frameset cols="*,325" framespacing="0" border="0" frameborder="0">
     <frame noresize name="polew" src="{{prefix}}normbutler{{round_no}}-{{segment_no}}.html">

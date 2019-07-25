@@ -149,7 +149,8 @@ class Interface(object):
                         'prefix': Constants.shortname,
                         'round_no': round_no,
                         'segment_no': segment_no,
-                        'first_board': first_board
+                        'first_board': first_board,
+                        'favicon': Constants.favicon
                     }).encode('utf8')
                 )
                 files.append(filename)
@@ -209,7 +210,8 @@ class Interface(object):
                             first_board + Constants.boardspersegment
                         ),
                         'date': datetime.now().strftime('%Y-%m-%d'),
-                        'time': datetime.now().strftime('%H:%M')
+                        'time': datetime.now().strftime('%H:%M'),
+                        'favicon': Constants.favicon
                     }).encode('utf8')
                 )
                 files.append(filename)
@@ -290,7 +292,8 @@ class Interface(object):
                 'above_threshold': above_threshold,
                 'below_threshold': below_threshold,
                 'date': datetime.now().strftime('%Y-%m-%d'),
-                'time': datetime.now().strftime('%H:%M')
+                'time': datetime.now().strftime('%H:%M'),
+                'favicon': Constants.favicon
             }).encode('utf8')
         )
         return [filename]

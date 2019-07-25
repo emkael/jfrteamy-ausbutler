@@ -10,6 +10,10 @@
     <meta name="Generator" content="jfrteamy-aus-butler">
     <title>{{"PAGE_TITLE"|translate}}: {{"BUTLER"|translate}}</title>
     <link rel="stylesheet" type="text/css" href="css/kolorki.css">
+    {% if favicon %}
+    <link rel="shortcut icon" href="images/{{favicon}}" type="image/x-icon">
+    <link rel="icon" href="images/{{favicon}}" type="image/x-icon">
+    {% endif %}
     <script type="text/javascript" src="sklady/myAjax.js"></script>
   </head>
   <body class="all">
