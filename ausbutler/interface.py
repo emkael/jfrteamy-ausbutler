@@ -243,6 +243,7 @@ class Interface(object):
                 players[butler.id] = {
                     'name': str(butler.player).decode('utf8'),
                     'team': str(butler.player.team_).decode('utf8') if butler.player else None,
+                    'link': Constants.plink.replace(':LINK:', butler.player.link) if butler.player is not None and Constants.plink else None,
                     'sum': 0,
                     'count': 0,
                     'results': copy(result_template)

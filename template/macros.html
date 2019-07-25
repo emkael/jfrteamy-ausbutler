@@ -66,7 +66,11 @@
 {% macro table_player(player, segment_limit) %}
 <tr>
   <td class="bdc1">{{player['place']}}</td>
+  {% if player['link'] %}
+  <td class="bd">{{player['link']}}{{player['name']}}</a></td>
+  {% else %}
   <td class="bd">{{player['name']}}</td>
+  {% endif %}
   <td class="bd">{{player['team']}}</td>
   <td class="bdc">{{'%.2f' % player['sum']}}</td>
   <td class="bdc">{{player['count']}}</td>
