@@ -1,10 +1,24 @@
 {
-    "BUTLER": {"pl": "BUTLER ZNORMALIZOWANY", "en": "NORMALIZED BUTLER"},
-    "BUTLER_ROUND": {"pl": "BUTLER ZNORMALIZOWANY, RUNDA#", "en": "NORMALIZED BUTLER, ROUND#"},
-    "NORMALIZED_CLASSIFICATION": {"pl": "INDYWIDUALNA KLASYFIKACJA BUTLERA ZNORMALIZOWANEGO",
-                                  "en": "INDIVIDUAL NORMALIZED BUTLER CLASSIFICATION"},
-    "HEADER_OPPS": {"pl": "śr.&nbsp;przec.", "en": "opp.&nbsp;<br />&nbsp;ave."},
-    "HEADER_NORMALIZED": {"pl": "znorm.", "en": "norm."},
+    "BUTLER": {
+        "pl": "BUTLER ZNORMALIZOWANY",
+        "en": "NORMALIZED BUTLER"
+    },
+    "BUTLER_ROUND": {
+        "pl": "BUTLER ZNORMALIZOWANY, RUNDA#",
+        "en": "NORMALIZED BUTLER, ROUND#"
+    },
+    "NORMALIZED_CLASSIFICATION": {
+        "pl": "INDYWIDUALNA KLASYFIKACJA BUTLERA ZNORMALIZOWANEGO",
+        "en": "INDIVIDUAL NORMALIZED BUTLER CLASSIFICATION"
+    },
+    "HEADER_OPPS": {
+        "pl": "śr.&nbsp;przec.",
+        "en": "opp.&nbsp;<br />&nbsp;ave."
+    },
+    "HEADER_NORMALIZED": {
+        "pl": "znorm.",
+        "en": "norm."
+    },
     "INFO_NORMALIZATION_PREFIX" : {
         "pl": "Butler znormalizowany w każdynm segmencie wyliczany jest przez dodanie ",
         "en": "Normalized butler for each segment is calculated by adding "
