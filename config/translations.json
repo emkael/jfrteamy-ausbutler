@@ -4,5 +4,33 @@
     "NORMALIZED_CLASSIFICATION": {"pl": "INDYWIDUALNA KLASYFIKACJA BUTLERA ZNORMALIZOWANEGO",
                                   "en": "INDIVIDUAL NORMALIZED BUTLER CLASSIFICATION"},
     "HEADER_OPPS": {"pl": "śr.&nbsp;przec.", "en": "opp.&nbsp;<br />&nbsp;ave."},
-    "HEADER_NORMALIZED": {"pl": "znorm.", "en": "norm."}
+    "HEADER_NORMALIZED": {"pl": "znorm.", "en": "norm."},
+    "INFO_NORMALIZATION_PREFIX" : {
+        "pl": "Butler znormalizowany w każdynm segmencie wyliczany jest przez dodanie ",
+        "en": "Normalized butler for each segment is calculated by adding "
+    },
+    "INFO_NORMALIZATION_SUFFIX" : {
+        "pl": "% średniego nieznormalizowanego wyniku na rozdanie przeciwników do własnego nieznormalizowanego wyniku pary na rozdanie.",
+        "en": "% of opponent's average non-normalized score per board to pair's own non-normalized score per board."
+    },
+    "INFO_CUTOFF_PREFIX": {
+        "pl": "Powyżej ",
+        "en": "Above "
+    },
+    "INFO_CUTOFF": {
+        "pl": " IMP na segment, zalicza się jedynie ",
+        "en": " IMPs per segment, only "
+    },
+    "INFO_CUTOFF_SUFFIX": {
+        "pl": "% wyniku.",
+        "en": "% of the score counts."
+    },
+    "INFO_NOT_ONLY_CURRENT": {
+        "pl": "Wszystkie segmenty są brane pod uwagę przy wyliczaniu średniego wyniku przeciwników, wyniki ulegają więc zmianie z każdym rozegranym segmentem.",
+        "en": "All played segments are used each time to calculate opponent's average, so normalized scores may change after new segments are played."
+    },
+    "INFO_ONLY_CURRENT": {
+        "pl": "Jedynie dotychczas rozegrane segmenty są brane pod uwagę przy wyliczaniu średniego wyniku przeciwników, znormalizowane wartości dla początkowych rund mogą zatem nie być tak istotne.",
+        "en": "Only already played segments are used to calculate opponent's average, so normalized score for the first rounds may not be as significant."
+    }
 }

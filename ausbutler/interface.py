@@ -293,7 +293,8 @@ class Interface(object):
                 'below_threshold': below_threshold,
                 'date': datetime.now().strftime('%Y-%m-%d'),
                 'time': datetime.now().strftime('%H:%M'),
-                'favicon': Constants.favicon
+                'favicon': Constants.favicon,
+                'config': self.config
             }).encode('utf8')
         )
         return [filename]

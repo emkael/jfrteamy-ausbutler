@@ -33,6 +33,23 @@
           {% endif %}
         </td>
       </tr>
+      <tr>
+        <td class="bde1" style="background: none; padding: 0 2em" colspan="{{segment_limit+5}}">
+          <p>
+            {{"INFO_NORMALIZATION_PREFIX"|translate}}{{config['opponent_factor'] * 100}}{{"INFO_NORMALIZATION_SUFFIX"|translate}}
+          </p>
+          <p>
+            {{"INFO_CUTOFF_PREFIX"|translate}}{{config['cutoff_point']}}{{"INFO_CUTOFF"|translate}}{{config['cutoff_rate'] * 100}}{{"INFO_CUTOFF_SUFFIX"|translate}}
+          </p>
+          <p>
+            {% if config['only_current'] %}
+            {{"INFO_ONLY_CURRENT"|translate}}
+            {% else %}
+            {{"INFO_NOT_ONLY_CURRENT"|translate}}
+            {% endif %}
+          </p>
+        </td>
+      </tr>
       {{ separator(segment_limit+5) }}
       {% if segments|length > segment_limit %}
         {{ previous_rounds(segments, segment_limit, prefix, per_round) }}
