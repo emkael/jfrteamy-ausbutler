@@ -24,7 +24,7 @@
         "en": "Normalized butler for each segment is calculated by adding "
     },
     "INFO_NORMALIZATION_SUFFIX" : {
-        "pl": "% średniego nieznormalizowanego wyniku na rozdanie przeciwników do własnego nieznormalizowanego wyniku pary na rozdanie.",
+        "pl": "% średniego nieznormalizowanego<br />wyniku na rozdanie przeciwników do własnego nieznormalizowanego wyniku pary na rozdanie.",
         "en": "% of opponent's average non-normalized score per board to pair's own non-normalized score per board."
     },
     "INFO_CUTOFF_PREFIX": {
@@ -40,7 +40,7 @@
         "en": "% of the score counts."
     },
     "INFO_NOT_ONLY_CURRENT": {
-        "pl": "Wszystkie segmenty są brane pod uwagę przy wyliczaniu średniego wyniku przeciwników, wyniki ulegają więc zmianie z każdym rozegranym segmentem.",
+        "pl": "Wszystkie segmenty są brane pod uwagę przy wyliczaniu średniego wyniku przeciwników,<br />wyniki ulegają więc zmianie z każdym rozegranym segmentem.",
         "en": "All played segments are used each time to calculate opponent's average, so normalized scores may change after new segments are played."
     },
     "INFO_ONLY_CURRENT": {
