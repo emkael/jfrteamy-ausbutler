@@ -20,7 +20,7 @@
         "en": "norm."
     },
     "INFO_NORMALIZATION_PREFIX" : {
-        "pl": "Butler znormalizowany w każdynm segmencie wyliczany jest przez dodanie ",
+        "pl": "Butler znormalizowany w każdym segmencie wyliczany jest przez dodanie ",
         "en": "Normalized butler for each segment is calculated by adding "
     },
     "INFO_NORMALIZATION_SUFFIX" : {
