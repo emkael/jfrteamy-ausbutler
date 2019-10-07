@@ -88,6 +88,11 @@ class Interface(object):
                                 aus_b.score,
                                 self.config['cutoff_point'],
                                 self.config['cutoff_rate'])
+                            if aus_b.table is None:
+                                raise ValueError(
+                                    'player ID=%d has butler (round %d, segment %d), but is missing from lineup!' % (
+                                        aus_b.id, aus_b.match, aus_b.segment
+                                    ))
                             aus_b.board_count = aus_b.table.butler_count[
                                 get_room(aus_b, butler.id)]
                             self.session.add(aus_b)
